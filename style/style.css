@@ -385,6 +385,10 @@ body {
 
 /* Для телефонів */
 @media screen and (max-width: 767px) {
+    html {
+        overflow-x: hidden;
+    }
+
     header {
         padding: 10px 10px;
         background-color: #003C60;
@@ -403,8 +407,8 @@ body {
     }
 
     .car-item {
-        width: 100%;
-        margin: 10px auto;
+        width: 80%;
+        margin: 0 auto 20px auto;
         flex-direction: column;
         padding: 10px;
     }
@@ -455,5 +459,9 @@ body {
     .button {
         padding: 6px 10px;
         font-size: 12px;
+    }
+
+    .footer-container {
+        width: 100%;
     }
 }
