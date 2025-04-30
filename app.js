@@ -10,18 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: 8, label: "Timed Auctions" },
     { id: 9, label: "Rental Vehicles" }
   ];
-  
-  const container = document.getElementById('buttons-filters');
-  
-  filters.forEach(filter => {
-    const button = document.createElement('button');
-    
-    button.className = 'button';
-    button.textContent = filter.label;
-    button.dataset.id = filter.id; 
-    container.appendChild(button);
-  });
-  
+
   const cars = [
     {
       title: "2015 BMW 328 2.0T xDrive",
@@ -80,6 +69,17 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_535.jpg"
     }
   ];
+  
+  const container = document.getElementById('buttons-filters');
+  
+  filters.forEach(filter => {
+    const button = document.createElement('button');
+    
+    button.className = 'button';
+    button.textContent = filter.label;
+    button.dataset.id = filter.id; 
+    container.appendChild(button);
+  });
   
   const carContainer = document.querySelector('.car-item-container');
   
