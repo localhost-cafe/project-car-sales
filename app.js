@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
   
   const container = document.getElementById('buttons-filters');
+  const carContainer = document.querySelector('.car-item-container');
   
   filters.forEach(filter => {
     const button = document.createElement('button');
@@ -80,8 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
     button.dataset.id = filter.id; 
     container.appendChild(button);
   });
-  
-  const carContainer = document.querySelector('.car-item-container');
   
   cars.forEach(car => {
     const carItem = document.createElement('div');
