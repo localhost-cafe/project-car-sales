@@ -21,8 +21,26 @@
     <div class="buttons-container" id="buttons-filters"></div>
   </div>
 
-  <div class="container">
-    <div class="car-item-container"></div>
+  <div class="items-with-btn-container">
+    <button id="add-car-btn" class="add-car-btn">Add New Car</button>
+
+    <div id="modal-overlay" class="hidden">
+      <div id="modal-content">
+        <button id="close-modal">Close</button>
+        <form id="car-form">
+          <input type="text" id="car-title" placeholder="Car Title" required>
+          <input type="text" id="car-stock" placeholder="Stock Number" required>
+          <input type="text" id="car-status" placeholder="Status" required>
+          <textarea id="car-info" placeholder="Car Info" required></textarea>
+          <input type="text" id="car-image" placeholder="Car Image URL" required>
+          <button type="submit">Add Car</button>
+        </form>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="car-item-container"></div>
+    </div>
   </div>
 
   <footer class="footer-container">

@@ -69,47 +69,106 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_535.jpg"
     }
   ];
-  
+
   const container = document.getElementById('buttons-filters');
-  
+  const carContainer = document.querySelector('.car-item-container');
+  const modalOverlay = document.getElementById("modal-overlay");
+  const addCarBtn = document.getElementById("add-car-btn");
+  const closeModal = document.getElementById("close-modal");
+  const carForm = document.getElementById("car-form");
+
   filters.forEach(filter => {
     const button = document.createElement('button');
-    
     button.className = 'button';
     button.textContent = filter.label;
-    button.dataset.id = filter.id; 
+    button.dataset.id = filter.id;
     container.appendChild(button);
   });
-  
-  const carContainer = document.querySelector('.car-item-container');
-  
-  cars.forEach(car => {
-    const carItem = document.createElement('div');
-  
-    carItem.classList.add('car-item');
-    
-    carItem.innerHTML = `
-      <div class="image-wrapper">
-        <img src="${car.image}" alt="Car Image">
-      </div>
-      <div class="car-details">
-        <div class="car-header">
-          <div>
-            <div class="car-title">${car.title}</div>
-            <div class="car-subtitle">Stock #: ${car.stock}</div>
-          </div>
-          <span class="status-badge">${car.status}</span>
-        </div>
-        <div class="car-info">
-          ${car.info}
-        </div>
-        <div class="car-actions">
-          <span class="reserve-price">Reserve price</span>
-          <a href="#" class="view-sale">View</a>
-        </div>
-      </div>
-    `;
-    
-    carContainer.appendChild(carItem);
+
+  addCarBtn.addEventListener("click", () => {
+    modalOverlay.classList.remove("hidden");
   });
-});  
+
+  closeModal.addEventListener("click", () => {
+    modalOverlay.classList.add("hidden");
+  });
+
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) {
+      modalOverlay.classList.add("hidden");
+    }
+  });
+
+  carForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const newCar = {
+      title: document.getElementById("car-title").value,
+      stock: document.getElementById("car-stock").value,
+      status: document.getElementById("car-status").value,
+      info: document.getElementById("car-info").value,
+      image: document.getElementById("car-image").value
+    };
+
+    cars.push(newCar);
+    renderCars();
+    modalOverlay.classList.add("hidden");
+    carForm.reset();
+  });
+
+  function renderCars() {
+    carContainer.innerHTML = "";
+    cars.forEach(car => {
+      const carItem = document.createElement('div');
+      carItem.classList.add('car-item');
+      carItem.style.position = "relative";
+  
+      carItem.innerHTML = `
+        <button class="delete-car" style="
+          z-index: 1;
+          position: absolute;
+          top: 3px;
+          right: -4px;
+          background: transparent;
+          border: none;
+          font-size: 18px;
+          cursor: pointer;
+          color: #999;
+        " title="Delete">&times;</button>
+  
+        <div class="image-wrapper">
+          <img src="${car.image}" alt="Car Image">
+        </div>
+        <div class="car-details">
+          <div class="car-header">
+            <div>
+              <div class="car-title">${car.title}</div>
+              <div class="car-subtitle">Stock #: ${car.stock}</div>
+            </div>
+            <span class="status-badge">${car.status}</span>
+          </div>
+          <div class="car-info">${car.info}</div>
+          <div class="car-actions">
+            <span class="reserve-price">Reserve price</span>
+            <a href="#" class="view-sale">View</a>
+          </div>
+        </div>
+      `;
+  
+      carItem.querySelector(".delete-car").addEventListener("click", () => {
+        const confirmDelete = confirm("Ви впевнені, що хочете видалити цей автомобіль?");
+        if (confirmDelete) {
+          const index = cars.indexOf(car);
+          if (index !== -1) {
+            cars.splice(index, 1);
+            renderCars();
+          }
+        }
+      });
+  
+      carContainer.appendChild(carItem);
+    });
+  }
+  
+  renderCars();
+});
