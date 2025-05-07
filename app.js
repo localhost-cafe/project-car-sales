@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: 9, label: "Rental Vehicles" }
   ];
 
-  const cars = [
+  let cars = [
     {
+      id: 0,
       title: "2015 BMW 328 2.0T xDrive",
       stock: "41041216",
       status: "Run & Drive",
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_328.jpg"
     },
     {
+      id: 1,
       title: "2017 BMW 330 2.0T xDrive",
       stock: "41041216",
       status: "Run & Drive",
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_330.jpg"
     },
     {
+      id: 2,
       title: "2020 BMW 530 2.0T",
       stock: "41041216",
       status: "Run & Drive",
@@ -37,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_530.jpg"
     },
     {
+      id: 3,
       title: "2014 BMW X5 3.0 xDrive",
       stock: "41001229",
       status: "Deployed",
@@ -45,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_X5.jpg"
     },
     {
+      id: 4,
       title: "2020 BMW X3 2.0 xDrive",
       stock: "41001229",
       status: "Deployed",
@@ -53,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_X3.jpg"
     },
     {
+      id: 5,
       title: "2021 BMW X7 3.0 xDrive",
       stock: "41001229",
       status: "Deployed",
@@ -61,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "image/cars/BMW_X7.jpg"
     },
     {
+      id: 6,
       title: "2015 BMW 535 3.0",
       stock: "40974945",
       status: "Stationary",
@@ -70,12 +77,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ];
 
+  let currentId = cars.length;
+
   const container = document.getElementById('buttons-filters');
   const carContainer = document.querySelector('.car-item-container');
   const modalOverlay = document.getElementById("modal-overlay");
   const addCarBtn = document.getElementById("add-car-btn");
-  const closeModal = document.getElementById("close-modal");
+  const closeModalBtn = document.getElementById("close-modal-btn");
   const carForm = document.getElementById("car-form");
+  const closeModalIcon = document.getElementById('modal-close-icon');
 
   filters.forEach(filter => {
     const button = document.createElement('button');
@@ -89,7 +99,11 @@ document.addEventListener("DOMContentLoaded", function () {
     modalOverlay.classList.remove("hidden");
   });
 
-  closeModal.addEventListener("click", () => {
+  closeModalBtn.addEventListener("click", () => {
+    modalOverlay.classList.add("hidden");
+  });
+  
+  closeModalIcon.addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
   });
 
@@ -103,14 +117,15 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     const newCar = {
-      title: document.getElementById("car-title").value,
-      stock: document.getElementById("car-stock").value,
-      status: document.getElementById("car-status").value,
-      info: document.getElementById("car-info").value,
-      image: document.getElementById("car-image").value
+      id: currentId++,
+      title: document.getElementById("new-car-title").value,
+      stock: document.getElementById("new-car-stock").value,
+      status: document.getElementById("new-car-status").value,
+      info: document.getElementById("new-car-info").value,
+      image: document.getElementById("new-car-image").value
     };
 
-    cars.push(newCar);
+    cars.unshift(newCar);
     renderCars();
     modalOverlay.classList.add("hidden");
     carForm.reset();
@@ -122,20 +137,30 @@ document.addEventListener("DOMContentLoaded", function () {
       const carItem = document.createElement('div');
       carItem.classList.add('car-item');
       carItem.style.position = "relative";
-  
+
       carItem.innerHTML = `
-        <button class="delete-car" style="
+        <style>
+          .delete-car {
+            color: #999;
+            transition: all 0.2s ease;
+          }
+
+          .delete-car:hover {
+            color: red !important;
+            transform: scale(1.2);
+          }
+        </style>
+        <button class="delete-car" data-id="${car.id}" style="
           z-index: 1;
           position: absolute;
           top: 3px;
           right: -4px;
           background: transparent;
           border: none;
-          font-size: 18px;
+          font-size: 27px;
           cursor: pointer;
-          color: #999;
         " title="Delete">&times;</button>
-  
+
         <div class="image-wrapper">
           <img src="${car.image}" alt="Car Image">
         </div>
@@ -154,21 +179,18 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
       `;
-  
+
       carItem.querySelector(".delete-car").addEventListener("click", () => {
         const confirmDelete = confirm("Ви впевнені, що хочете видалити цей автомобіль?");
         if (confirmDelete) {
-          const index = cars.indexOf(car);
-          if (index !== -1) {
-            cars.splice(index, 1);
-            renderCars();
-          }
+          cars = cars.filter(c => c.id !== car.id);
+          renderCars();
         }
       });
-  
+
       carContainer.appendChild(carItem);
     });
   }
-  
+
   renderCars();
 });

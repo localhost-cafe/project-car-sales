@@ -28,6 +28,13 @@ body {
   font-size: 24px;
   margin: 0 auto;
 }
+
+.header-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
 .buttons-text {
   background: rgba(0, 0, 0, 0);
   margin-left: 15px;
@@ -84,22 +91,21 @@ body {
 .items-with-btn-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  width: 100%;
-  margin-top: 20px;
+  padding: 0 10%;
 }
 
 .add-car-btn {
-  display: block;
+  align-self: flex-end;
+  margin-top: 20px;
   width: 170px;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: rgb(0, 123, 255);
   color: white;
-  border: 1px solid #007bff;
+  border: 1px solid rgb(0, 123, 255);
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
-  margin: auto 180px;
+  margin: 0px;
 }
 
 .add-car-btn:hover {
@@ -134,6 +140,33 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  position: relative;
+}
+
+.modal-buttons-row {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#modal-close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+#modal-close-icon:hover {
+  color: red;
+}
+
+button[type="submit"] {
+  margin-left: 20px;
 }
 
 button {
@@ -151,7 +184,7 @@ button:hover {
   background-color: #45a049;
 }
 
-#close-modal {
+#close-modal-btn {
   align-self: flex-end;
   background-color: #f44336;
   font-size: 14px;
@@ -160,7 +193,7 @@ button:hover {
   cursor: pointer;
 }
 
-#close-modal:hover {
+#close-modal-btn:hover {
   background-color: #d32f2f;
 }
 
@@ -195,6 +228,10 @@ button:hover {
 
 #car-form button:hover {
   background-color: #007b9f;
+}
+
+.delete-car:hover {
+  color: red;
 }
 
 .container {
@@ -276,7 +313,7 @@ button:hover {
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 85%;
+  width: 100%;
   margin: 0 auto 20px auto;
   box-sizing: border-box;
   margin-top: 20px;
@@ -506,23 +543,28 @@ button:hover {
   }
 
   .items-with-btn-container {
-    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10%;
   }
 
   .add-car-btn {
-    width: 120px;
-    padding: 4px 8px;
+    width: 150px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
     font-size: 12px;
-    align-self: flex-end;
-    margin-bottom: 10px;
-    margin: auto 70px;
+    margin: 0; /* Без додаткових відступів */
   }
 
   .car-item {
-    width: 80%;
+    width: 100%;
     margin: 0 auto 20px auto;
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
     cursor: pointer;
     position: relative;
   }
@@ -626,7 +668,7 @@ button:hover {
     cursor: pointer;
   }
 
-  #close-modal:hover {
+  #close-modal-btn:hover {
     background-color: #ddd;
   }
 }
@@ -648,7 +690,7 @@ button:hover {
     margin-bottom: 12px;
   }
 
-  #close-modal {
+  #close-modal-btn {
     padding: 10px;
   }
 }
