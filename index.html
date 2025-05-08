@@ -21,10 +21,35 @@
     <div class="buttons-container" id="buttons-filters"></div>
   </div>
 
-  <div class="container">
-    <div class="car-item-container"></div>
+  <div class="items-with-btn-container">
+    <button id="add-car-btn" class="add-car-btn">Add New Car</button>
+  
+    <div id="modal-overlay" class="hidden">
+      <div id="modal-content">
+        <span id="modal-close-icon">&times;</span>
+  
+        <form id="car-form">
+          <input type="text" id="new-car-title" placeholder="Car Title" required>
+          <input type="text" id="new-car-stock" placeholder="Stock Number" required>
+          <input type="text" id="new-car-status" placeholder="Status" required>
+          <textarea id="new-car-info" placeholder="Car Info" required></textarea>
+          <input type="text" id="new-car-image" placeholder="Car Image URL" required>
+  
+          <div class="modal-buttons-row">
+            <button type="button" id="close-modal-btn">Close</button>
+            <button type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <div class="container">
+      <div class="car-item-container">
+        <!-- Here will go dynamically added cars -->
+      </div>
+    </div>
   </div>
-
+  
   <footer class="footer-container">
     <a href="contact.html">Contact</a>
     <a href="about.html">About</a>
