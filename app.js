@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ];
 
-  let currentId = cars.length;
+  let lastCarId = cars[cars.length - 1].id
 
   const container = document.getElementById('buttons-filters');
   const carContainer = document.querySelector('.car-item-container');
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     const newCar = {
-      id: currentId++,
+      id: lastCarId++,
       title: document.getElementById("new-car-title").value,
       stock: document.getElementById("new-car-stock").value,
       status: document.getElementById("new-car-status").value,
