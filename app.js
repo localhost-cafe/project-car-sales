@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: 9, label: "Rental Vehicles" }
   ];
 
-  let cars = [
+  const cars = [
     {
       id: 0,
       title: "2015 BMW 328 2.0T xDrive",
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ];
 
-  let currentId = cars.length;
+  let lastCarId = cars[cars.length - 1].id
 
   const container = document.getElementById('buttons-filters');
   const carContainer = document.querySelector('.car-item-container');
@@ -102,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closeModalBtn.addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
   });
-  
   closeModalIcon.addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
   });
@@ -117,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     const newCar = {
-      id: currentId++,
+      id: lastCarId++,
       title: document.getElementById("new-car-title").value,
       stock: document.getElementById("new-car-stock").value,
       status: document.getElementById("new-car-status").value,
@@ -183,8 +182,11 @@ document.addEventListener("DOMContentLoaded", function () {
       carItem.querySelector(".delete-car").addEventListener("click", () => {
         const confirmDelete = confirm("Ви впевнені, що хочете видалити цей автомобіль?");
         if (confirmDelete) {
-          cars = cars.filter(c => c.id !== car.id);
-          renderCars();
+          const index = cars.findIndex(c => c.id === car.id);
+          if (index !== -1) {
+            cars.splice(index, 1);
+            renderCars();
+          }
         }
       });
 
