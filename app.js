@@ -86,6 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeModalBtn = document.getElementById("close-modal-btn");
   const carForm = document.getElementById("car-form");
   const closeModalIcon = document.getElementById('modal-close-icon');
+  const editModalOverlay = document.getElementById("edit-modal-overlay");
+  const editCarForm = document.getElementById("edit-car-form");
+  const editModalCloseIcon = document.getElementById("edit-modal-close-icon");
+  const cancelBtn = document.getElementById("cancel-edit-btn");
+
+
 
   filters.forEach(filter => {
     const button = document.createElement('button');
@@ -139,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       carItem.innerHTML = `
         <style>
-          .delete-car {
+          .delete-car, .edit-car {
             color: #999;
             transition: all 0.2s ease;
           }
@@ -148,17 +154,29 @@ document.addEventListener("DOMContentLoaded", function () {
             color: red !important;
             transform: scale(1.2);
           }
+
+          .edit-car:hover {
+            color: #007bff !important;
+            transform: scale(1.2);
+          }
         </style>
-        <button class="delete-car" data-id="${car.id}" style="
-          z-index: 1;
-          position: absolute;
-          top: 3px;
-          right: -4px;
-          background: transparent;
-          border: none;
-          font-size: 27px;
-          cursor: pointer;
-        " title="Delete">&times;</button>
+
+        <div style="position: absolute; top: 3px; right: 5px; display: flex; gap: 3px; z-index: 1;">
+          <button class="edit-car" data-id="${car.id}" style="
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+          " title="Edit">&#9998;</button>
+
+          <button class="delete-car" data-id="${car.id}" style="
+            background: transparent;
+            border: none;
+            font-size: 27px;
+            cursor: pointer;
+          " title="Delete">&times;</button>
+        </div>
+
 
         <div class="image-wrapper">
           <img src="${car.image}" alt="Car Image">
@@ -190,9 +208,56 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
+      carItem.querySelector(".edit-car").addEventListener("click", () => {
+        document.getElementById("edit-car-id").value = car.id;
+        document.getElementById("edit-car-title").value = car.title;
+        document.getElementById("edit-car-stock").value = car.stock;
+        document.getElementById("edit-car-status").value = car.status;
+        document.getElementById("edit-car-info").value = car.info;
+        document.getElementById("edit-car-image").value = car.image;
+      
+        editModalOverlay.classList.remove("hidden");
+      });
+
       carContainer.appendChild(carItem);
     });
   }
+
+  editCarForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+  
+    const id = parseInt(document.getElementById("edit-car-id").value);
+    const updatedCar = {
+      id,
+      title: document.getElementById("edit-car-title").value,
+      stock: document.getElementById("edit-car-stock").value,
+      status: document.getElementById("edit-car-status").value,
+      info: document.getElementById("edit-car-info").value,
+      image: document.getElementById("edit-car-image").value
+    };
+  
+    const index = cars.findIndex(car => car.id === id);
+    if (index !== -1) {
+      cars[index] = updatedCar;
+      renderCars();
+      editModalOverlay.classList.add("hidden");
+    }
+  });
+
+  editModalCloseIcon.addEventListener("click", () => {
+    editModalOverlay.classList.add("hidden");
+  });
+  
+  editModalOverlay.addEventListener("click", (e) => {
+    if (e.target === editModalOverlay) {
+      editModalOverlay.classList.add("hidden");
+    }
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    editModalOverlay.classList.add("hidden");
+  });
+  
 
   renderCars();
 });
