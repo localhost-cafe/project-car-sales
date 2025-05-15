@@ -22,8 +22,20 @@
   </div>
 
   <div class="items-with-btn-container">
-    <button id="add-car-btn" class="add-car-btn">Add New Car</button>
-  
+    <div class="filters-container">
+      <div class="filters">
+        <select id="filter-year">
+          <option value="">All Years</option>
+        </select>
+
+        <select id="filter-brand">
+          <option value="">All Brands</option>
+        </select>
+      </div>
+
+      <button id="add-car-btn" class="add-car-btn">Add New Car</button>
+    </div>
+
     <div id="modal-overlay" class="hidden">
       <div id="modal-content">
         <span id="modal-close-icon">&times;</span>

@@ -74,7 +74,70 @@ document.addEventListener("DOMContentLoaded", function () {
       info: 'Salvage | Left Front Collision<br>153,725 mi | Gasoline | 2.0L I-4 DI, DOHC',
       vin: 'WAUGAFC9FN050280',
       image: 'image/cars/BMW_535.jpg'
-    }
+    },
+    {
+      id: 7,
+      title: '2011 AUDI A4 2.0T',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/AUDI_A4.jpg'
+    },
+    {
+      id: 8,
+      title: '2013 AUDI A7',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/AUDI_A7.jpg'
+    },
+    {
+      id: 9,
+      title: '2005 FORD Mondeo',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/FORD_Mondeo.jpg'
+    },
+    {
+      id: 10,
+      title: '2012 FORD Focus',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/FORD_Focus.jpg'
+    },
+    {
+      id: 11,
+      title: '2020 MAZDA 6',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/MAZDA_6.jpg'
+    },
+    {
+      id: 12,
+      title: '2021 MAZDA CX-5',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/MAZDA_CX-5.jpg'
+    },
+    {
+      id: 13,
+      title: '2012 TOYOTA PRADO',
+      stock: '41041216',
+      status: 'Run & Drive',
+      info: 'Salvage | Front End Collision<br>64,688 mi | Gasoline | 2.0L I-4 DI, DOHC',
+      vin: 'WAUGAFC7FN023627',
+      image: 'image/cars/TOYOTA_PRADO.jpg'
+    },
   ];
 
   let lastCarId = cars[cars.length - 1].id
@@ -90,6 +153,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const editCarForm = document.getElementById('edit-car-form');
   const editModalCloseIcon = document.getElementById('edit-modal-close-icon');
   const cancelBtn = document.getElementById('cancel-edit-btn');
+  const yearSelect = document.getElementById('filter-year');
+  const brandSelect = document.getElementById('filter-brand');
 
   filters.forEach(filter => {
     const button = document.createElement('button');
@@ -135,9 +200,42 @@ document.addEventListener("DOMContentLoaded", function () {
     carForm.reset();
   });
 
-  function renderCars() {
+  const years = [...new Set(cars.map(car => car.title.split(' ')[0]))];
+  const brands = [...new Set(cars.map(car => car.title.split(' ')[1]))];
+
+  years.forEach(year => {
+    const option = document.createElement('option');
+    option.value = year;
+    option.textContent = year;
+    yearSelect.appendChild(option);
+  });
+
+  brands.forEach(brand => {
+    const option = document.createElement('option');
+    option.value = brand;
+    option.textContent = brand;
+    brandSelect.appendChild(option);
+  });
+
+  yearSelect.addEventListener('change', filterCars);
+  brandSelect.addEventListener('change', filterCars);
+
+  function filterCars() {
+    const selectedYear = yearSelect.value;
+    const selectedBrand = brandSelect.value;
+
+    const filteredCars = cars.filter(car => {
+      const matchesYear = selectedYear ? car.title.startsWith(selectedYear) : true;
+      const matchesBrand = selectedBrand ? car.title.includes(selectedBrand) : true;
+      return matchesYear && matchesBrand;
+    });
+
+    renderCars(filteredCars);
+  }
+
+  function renderCars(carsToRender = cars) {
     carContainer.innerHTML = "";
-    cars.forEach(car => {
+    carsToRender.forEach(car => {
       const carItem = document.createElement('div');
       carItem.classList.add('car-item');
       carItem.style.position = 'relative';
