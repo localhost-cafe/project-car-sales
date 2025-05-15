@@ -22,8 +22,20 @@
   </div>
 
   <div class="items-with-btn-container">
-    <button id="add-car-btn" class="add-car-btn">Add New Car</button>
-  
+    <div class="filters-container">
+      <div class="filters">
+        <select id="filter-year">
+          <option value="">All Years</option>
+        </select>
+
+        <select id="filter-brand">
+          <option value="">All Brands</option>
+        </select>
+      </div>
+
+      <button id="add-car-btn" class="add-car-btn">Add New Car</button>
+    </div>
+
     <div id="modal-overlay" class="hidden">
       <div id="modal-content">
         <span id="modal-close-icon">&times;</span>
@@ -42,11 +54,26 @@
         </form>
       </div>
     </div>
+
+    <div id="edit-modal-overlay" class="hidden edit-modal-overlay">
+      <div class="edit-modal">
+        <span id="edit-modal-close-icon" class="edit-modal-close-icon">&times;</span>
+        <h2>Edit Car</h2>
+        <form id="edit-car-form">
+          <input type="hidden" id="edit-car-id" />
+          <input type="text" id="edit-car-title" placeholder="Title" required />
+          <input type="text" id="edit-car-stock" placeholder="Stock" required />
+          <input type="text" id="edit-car-status" placeholder="Status" required />
+          <textarea id="edit-car-info" placeholder="Info" required></textarea>
+          <input type="text" id="edit-car-image" placeholder="Image URL" required />
+          <button type="submit">Save Changes</button>
+          <button type="cancel" id="cancel-edit-btn">Cancel</button>
+        </form>
+      </div>
+    </div>    
   
     <div class="container">
-      <div class="car-item-container">
-        <!-- Here will go dynamically added cars -->
-      </div>
+      <div class="car-item-container"></div>
     </div>
   </div>
   
