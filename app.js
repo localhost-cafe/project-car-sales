@@ -248,12 +248,12 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           .delete-car:hover {
-            color: red !important;
+            color: red;
             transform: scale(1.2);
           }
 
           .edit-car:hover {
-            color: #007bff !important;
+            color: #007bff;
             transform: scale(1.2);
           }
         </style>
